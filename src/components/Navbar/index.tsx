@@ -11,7 +11,7 @@ const Navbar = () => {
     const pathname = usePathname();
 
     return (
-        <div className="flex items-center justify-between w-full py-2 max-w-[1120px]">
+        <header className="flex items-center justify-between w-full py-2 max-width mb-6 border-b border-gray-400">
             {/* Logo */}
             <div>
                 <h2 className="text-2xl font-medium">
@@ -47,7 +47,7 @@ const Navbar = () => {
             <div>
                 <Dropdown
                     content={
-                        <div className="divide-y divide-gray-300 rounded-lg shadow-sm w-44 overflow-hidden">
+                        <div className="divide-y divide-gray-300 rounded-lg shadow-sm w-44 overflow-hidden bg-white">
                             <h3 className="block px-4 py-2">
                                 {userInfo?.name}
                             </h3>
@@ -69,7 +69,7 @@ const Navbar = () => {
                     </figure>
                 </Dropdown>
             </div>
-        </div>
+        </header>
     );
 };
 

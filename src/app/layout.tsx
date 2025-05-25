@@ -14,9 +14,9 @@ export default function RootLayout({
 }>) {
     return (
         <html lang="en">
-            <body className={`min-h-screen flex flex-col items-center px-4`}>
+            <body className={`min-h-screen px-4`}>
                 <AppWrapper>
-                    <main className="max-w-[1120px]">{children}</main>
+                    <main className="">{children}</main>
                 </AppWrapper>
             </body>
         </html>

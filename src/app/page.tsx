@@ -1,12 +1,19 @@
+"use client";
+
 import { CTAButton } from "@/components/Button";
-import React from "react";
+import { UserContext } from "@/context";
+import React, { useContext } from "react";
 
 const Home = () => {
+    const { userInfo, isLoading } = useContext(UserContext)!;
+
+    if (isLoading || userInfo) return;
+
     return (
-        <main className="h-full flex flex-col items-center justify-center flex-1 px-4">
+        <main className="w-full h-screen flex flex-col items-center justify-center flex-1 px-4">
             {/* Hero */}
             <div
-                className="relative aspect-[2/1] w-full max-w-[1150px] mx-auto bg-no-repeat bg-cover bg-center rounded-2xl flex items-center justify-center"
+                className="relative aspect-[2/1] w-full max-width bg-no-repeat bg-cover bg-center rounded-2xl flex items-center justify-center"
                 style={{
                     backgroundImage:
                         "url(https://images.unsplash.com/photo-1590402494610-2c378a9114c6)",
@@ -29,7 +36,7 @@ const Home = () => {
                     </div>
                 </div>
 
-                <div className="bg-black/40 inset-0 absolute"></div>
+                <div className="bg-black/40 inset-0 absolute rounded-2xl"></div>
             </div>
         </main>
     );

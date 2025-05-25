@@ -5,7 +5,14 @@ export interface UserInfo {
     profile_picture: string;
 }
 
-export interface Tasks {}
+export interface Tasks {
+    id: string;
+    title: string;
+    status: "TODO" | "IN_PROGRESS" | "DONE";
+    priority: "LOW" | "MEDIUM" | "HIGH";
+    dueDate: string;
+    project: string;
+}
 
 export interface UserContextProps {
     userInfo: UserInfo | null;
@@ -14,8 +21,8 @@ export interface UserContextProps {
     setIsLoading: React.Dispatch<React.SetStateAction<boolean>>;
     tasks: Tasks[];
     setTasks: React.Dispatch<React.SetStateAction<Tasks[]>>;
-    drawerOpened: boolean;
-    setDrawerOpened: React.Dispatch<React.SetStateAction<boolean>>;
+    projects: string[];
+    setProjects: React.Dispatch<React.SetStateAction<string[]>>;
 }
 
 export const UserContext = createContext<UserContextProps | null>(null);
@@ -26,11 +33,11 @@ const UserContextWrapper = ({ children }: { children: React.ReactNode }) => {
         profile_picture: "https://i.ibb.co/jkQk36Kg/2.jpg",
     });
 
-    const [isLoading, setIsLoading] = useState<boolean>(false);
+    const [isLoading, setIsLoading] = useState<boolean>(true);
 
     const [tasks, setTasks] = useState<Tasks[]>([]);
 
-    const [drawerOpened, setDrawerOpened] = useState<boolean>(false);
+    const [projects, setProjects] = useState<string[]>([]);
 
     return (
         <UserContext.Provider
@@ -41,8 +48,8 @@ const UserContextWrapper = ({ children }: { children: React.ReactNode }) => {
                 setIsLoading,
                 tasks,
                 setTasks,
-                drawerOpened,
-                setDrawerOpened,
+                projects,
+                setProjects,
             }}
         >
             {children}

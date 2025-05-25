@@ -1,0 +1,66 @@
+[
+    {
+        "id": "1",
+        "title": "Design landing page",
+        "status": "IN_PROGRESS",
+        "priority": "HIGH",
+        "dueDate": "2025-05-30",
+        "project": "Website Redesign"
+    },
+    {
+        "id": "2",
+        "title": "Write blog post on productivity",
+        "status": "TODO",
+        "priority": "MEDIUM",
+        "dueDate": "2025-06-02",
+        "project": "Content Creation"
+    },
+    {
+        "id": "3",
+        "title": "Fix login issue",
+        "status": "DONE",
+        "priority": "HIGH",
+        "dueDate": "2025-05-20",
+        "project": "Bug Fixes"
+    },
+    {
+        "id": "4",
+        "title": "Setup CI/CD pipeline",
+        "status": "IN_PROGRESS",
+        "priority": "HIGH",
+        "dueDate": "2025-06-05",
+        "project": "DevOps"
+    },
+    {
+        "id": "5",
+        "title": "Update user profile page",
+        "status": "TODO",
+        "priority": "LOW",
+        "dueDate": "2025-06-10",
+        "project": "User Experience"
+    },
+    {
+        "id": "6",
+        "title": "Test task filtering feature",
+        "status": "IN_PROGRESS",
+        "priority": "MEDIUM",
+        "dueDate": "2025-06-01",
+        "project": "Testing"
+    },
+    {
+        "id": "7",
+        "title": "Clean up unused CSS",
+        "status": "DONE",
+        "priority": "LOW",
+        "dueDate": "2025-05-22",
+        "project": "Refactor"
+    },
+    {
+        "id": "8",
+        "title": "Prepare pitch deck",
+        "status": "TODO",
+        "priority": "HIGH",
+        "dueDate": "2025-06-03",
+        "project": "Business"
+    }
+]
