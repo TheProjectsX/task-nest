@@ -1,6 +1,6 @@
 "use client";
 
-import UserContextWrapper, { Tasks, UserContext } from "@/context";
+import UserContextWrapper, { Task, UserContext } from "@/context";
 import React, { useContext, useEffect } from "react";
 import Navbar from "../Navbar";
 import { useRouter } from "next/navigation";
@@ -26,14 +26,14 @@ const ProviderWrapper = ({ children }: { children: React.ReactNode }) => {
                 return;
             }
 
-            const localTasks: Tasks[] =
+            const localTasks: Task[] =
                 JSON.parse(localStorage.getItem("tasks")!) ?? [];
 
             const localProjects: string[] =
                 JSON.parse(localStorage.getItem("projects")!) ?? [];
 
             const [tasksResponse, projectsResponse] = await Promise.all([
-                axios.get<Tasks[]>("/api/tasks"),
+                axios.get<Task[]>("/api/tasks"),
                 axios.get<string[]>("/api/projects"),
             ]);
 

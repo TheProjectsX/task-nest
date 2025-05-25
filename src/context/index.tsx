@@ -5,7 +5,7 @@ export interface UserInfo {
     profile_picture: string;
 }
 
-export interface Tasks {
+export interface Task {
     id: string;
     title: string;
     status: "TODO" | "IN_PROGRESS" | "DONE";
@@ -19,8 +19,8 @@ export interface UserContextProps {
     setUserInfo: React.Dispatch<React.SetStateAction<UserInfo | null>>;
     isLoading: boolean;
     setIsLoading: React.Dispatch<React.SetStateAction<boolean>>;
-    tasks: Tasks[];
-    setTasks: React.Dispatch<React.SetStateAction<Tasks[]>>;
+    tasks: Task[];
+    setTasks: React.Dispatch<React.SetStateAction<Task[]>>;
     projects: string[];
     setProjects: React.Dispatch<React.SetStateAction<string[]>>;
 }
@@ -35,7 +35,7 @@ const UserContextWrapper = ({ children }: { children: React.ReactNode }) => {
 
     const [isLoading, setIsLoading] = useState<boolean>(true);
 
-    const [tasks, setTasks] = useState<Tasks[]>([]);
+    const [tasks, setTasks] = useState<Task[]>([]);
 
     const [projects, setProjects] = useState<string[]>([]);
 

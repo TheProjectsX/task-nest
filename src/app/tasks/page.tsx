@@ -1,35 +1,58 @@
 "use client";
 
-import TaskCard from "@/components/TaskCard";
-import { UserContext } from "@/context";
-import React, { useContext } from "react";
+import EditTask from "@/components/EditTask";
+import TaskCard, { PRIORITY, STATUS } from "@/components/TaskCard";
+import { Task, UserContext } from "@/context";
+import React, { useContext, useRef, useState } from "react";
 
-const Task = () => {
+const TaskView = () => {
     const { tasks, projects } = useContext(UserContext)!;
 
-    enum STATUS {
-        TODO = "Todo",
-        IN_PROGRESS = "In Progress",
-        DONE = "Done",
-    }
+    const [tasksToView, setTasksToView] = useState<Task[]>(tasks);
 
-    enum PRIORITY {
-        LOW = "Low",
-        MEDIUM = "Medium",
-        HIGH = "High",
-    }
+    const [currentTask, setCurrentTask] = useState<Task | undefined | null>(
+        null
+    );
+
+    const statusRef = useRef<HTMLSelectElement | null>(null);
+    const priorityRef = useRef<HTMLSelectElement | null>(null);
+    const projectRef = useRef<HTMLSelectElement | null>(null);
+
+    // Handle Filter
+    const handleFilter = () => {
+        const status = statusRef.current?.value;
+        const priority = priorityRef.current?.value;
+        const project = projectRef.current?.value;
+
+        const filtered = tasks.filter(
+            (item) =>
+                [item.status, undefined, ""].includes(status) &&
+                [item.priority, undefined, ""].includes(priority) &&
+                [item.project, undefined, ""].includes(project)
+        );
+
+        setTasksToView(filtered);
+    };
 
     return (
-        <div className=" max-width">
-            {/* Filters */}
-            <div className="mb-10 grid grid-cols-3 gap-5">
+        <div className="max-width mb-8">
+            <EditTask
+                task={currentTask}
+                closeModal={() => setCurrentTask(null)}
+            />
+
+            {/* Filters and Action Button */}
+            <div className="mb-5 md:mb-10 grid grid-cols-2 md:grid-cols-4 gap-5">
                 <div className="w-full">
-                    <label className="mb-2 text-sm font-medium text-gray-900 flex flex-col gap-2">
+                    <label className="text-sm font-medium text-gray-900 flex flex-col gap-2">
                         Filter by Status
-                        <select className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
-                            <option selected disabled>
-                                Choose an option
-                            </option>
+                        <select
+                            ref={statusRef}
+                            className="bg-gray-50 border-2 outline-none border-gray-300 text-gray-900 text-sm rounded-lg  focus:border-blue-500 block w-full p-2"
+                            onChange={handleFilter}
+                            defaultValue={""}
+                        >
+                            <option value={""}>Unfiltered</option>
                             {Object.entries(STATUS).map(([key, value]) => (
                                 <option key={key} value={key}>
                                     {value}
@@ -40,12 +63,15 @@ const Task = () => {
                 </div>
 
                 <div className="w-full">
-                    <label className="mb-2 text-sm font-medium text-gray-900 flex flex-col gap-2">
+                    <label className="text-sm font-medium text-gray-900 flex flex-col gap-2">
                         Filter by Priority
-                        <select className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
-                            <option selected disabled>
-                                Choose an option
-                            </option>
+                        <select
+                            ref={priorityRef}
+                            className="bg-gray-50 border-2 outline-none border-gray-300 text-gray-900 text-sm rounded-lg  focus:border-blue-500 block w-full p-2"
+                            onChange={handleFilter}
+                            defaultValue={""}
+                        >
+                            <option value={""}>Unfiltered</option>
                             {Object.entries(PRIORITY).map(([key, value]) => (
                                 <option key={key} value={key}>
                                     {value}
@@ -56,12 +82,15 @@ const Task = () => {
                 </div>
 
                 <div className="w-full">
-                    <label className="mb-2 text-sm font-medium text-gray-900 flex flex-col gap-2">
+                    <label className="text-sm font-medium text-gray-900 flex flex-col gap-2">
                         Filter by Project
-                        <select className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
-                            <option selected disabled>
-                                Choose an option
-                            </option>
+                        <select
+                            ref={projectRef}
+                            className="bg-gray-50 border-2 outline-none border-gray-300 text-gray-900 text-sm rounded-lg  focus:border-blue-500 block w-full p-2"
+                            onChange={handleFilter}
+                            defaultValue={""}
+                        >
+                            <option value={""}>Unfiltered</option>
                             {projects.map((item) => (
                                 <option key={item} value={item}>
                                     {item}
@@ -70,16 +99,38 @@ const Task = () => {
                         </select>
                     </label>
                 </div>
+
+                <div className="w-full flex items-end">
+                    <button
+                        className="text-white bg-blue-700 hover:bg-blue-800 active:scale-95 transition-[scale] duration-200 font-medium rounded-lg text-sm px-4 py-2.5 text-center flex-1 cursor-pointer"
+                        onClick={() => setCurrentTask(undefined)}
+                    >
+                        Add New
+                    </button>
+                </div>
             </div>
 
             {/* Tasks Section */}
-            <section className="grid grid-cols-3 gap-6">
-                {tasks.map((task, idx) => (
-                    <TaskCard task={task} key={idx} />
-                ))}
-            </section>
+            {tasksToView.length === 0 && (
+                <div className="w-full p-6 border border-dashed rounded-md border-gray-400 text-center text-gray-400">
+                    No Task to Show!
+                </div>
+            )}
+
+            {tasksToView.length > 0 && (
+                <section className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                    {tasksToView.map((task, idx) => (
+                        <TaskCard
+                            task={task}
+                            key={idx}
+                            onEdit={() => setCurrentTask(task)}
+                            onDelete={() => {}}
+                        />
+                    ))}
+                </section>
+            )}
         </div>
     );
 };
 
-export default Task;
+export default TaskView;

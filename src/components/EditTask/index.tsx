@@ -1,0 +1,137 @@
+import { Task, UserContext } from "@/context";
+import React, { useContext, useEffect } from "react";
+import { PRIORITY, STATUS } from "../TaskCard";
+import { MdClose } from "react-icons/md";
+
+const EditTask = ({
+    task,
+    closeModal,
+}: {
+    task: Task | undefined | null;
+    closeModal: () => void;
+}) => {
+    const { projects } = useContext(UserContext)!;
+
+    useEffect(() => {
+        document.body.style.overflow = task !== null ? "hidden" : "auto";
+    }, [task]);
+
+    if (task === null) return;
+
+    return (
+        <dialog
+            className="absolute inset-0 h-full w-full bg-black/50 z-10 flex items-center justify-center"
+            open={!!task}
+            onClose={closeModal}
+            onClick={(e) => {
+                if (e.target === e.currentTarget) {
+                    closeModal();
+                }
+            }}
+        >
+            <div className="relative bg-white px-4 py-4 rounded-2xl w-full max-w-lg">
+                <button
+                    className="absolute top-0.5 right-0.5 text-gray-500 hover:text-gray-700 p-1.5 rounded-full hover:bg-gray-100 cursor-pointer"
+                    onClick={closeModal}
+                >
+                    <MdClose className="w-5 h-5" />
+                </button>
+
+                <h3 className="text-lg font-semibold text-center underline underline-offset-4 mb-4">
+                    {typeof task === "undefined"
+                        ? "Add new Task"
+                        : "Update Task"}
+                </h3>
+
+                <form className="flex flex-col gap-4">
+                    <label className="mb-2 text-gray-900 flex flex-col gap-2">
+                        <span className="text-sm font-medium">Task</span>
+                        <input
+                            type="text"
+                            name="title"
+                            className="bg-gray-50 outline-none border-2 border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full px-2.5 py-2"
+                            defaultValue={task?.title}
+                            placeholder="Your Task"
+                            required
+                        />
+                    </label>
+
+                    <label className="mb-2 text-gray-900 flex flex-col gap-2">
+                        <span className="text-sm font-medium">Status</span>
+                        <select
+                            name="status"
+                            className="bg-gray-50 outline-none border-2 border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full px-2.5 py-2"
+                            defaultValue={task?.status}
+                        >
+                            {Object.entries(STATUS).map(([key, value]) => (
+                                <option key={key} value={key}>
+                                    {value}
+                                </option>
+                            ))}
+                        </select>
+                    </label>
+
+                    <label className="mb-2 text-gray-900 flex flex-col gap-2">
+                        <span className="text-sm font-medium">Priority</span>
+                        <select
+                            name="priority"
+                            className="bg-gray-50 outline-none border-2 border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full px-2.5 py-2"
+                            defaultValue={task?.priority}
+                        >
+                            {Object.entries(PRIORITY).map(([key, value]) => (
+                                <option key={key} value={key}>
+                                    {value}
+                                </option>
+                            ))}
+                        </select>
+                    </label>
+
+                    <label className="mb-2 text-gray-900 flex flex-col gap-2">
+                        <span className="text-sm font-medium">Project</span>
+                        <select
+                            name="project"
+                            className="bg-gray-50 outline-none border-2 border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full px-2.5 py-2"
+                            defaultValue={task?.priority}
+                        >
+                            <option value="">Unlisted</option>
+                            {projects.map((item, idx) => (
+                                <option key={idx} value={item}>
+                                    {item}
+                                </option>
+                            ))}
+                        </select>
+                    </label>
+
+                    <label className="mb-2 text-gray-900 flex flex-col gap-2">
+                        <span className="text-sm font-medium">Due Date</span>
+                        <input
+                            name="dueDate"
+                            min={new Date().toISOString().split("T")[0]}
+                            type="date"
+                            className="bg-gray-50 outline-none border-2 border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full px-2.5 py-2"
+                            defaultValue={task?.dueDate}
+                            required
+                        />
+                    </label>
+
+                    <div className="flex items-center gap-4">
+                        <button
+                            type="reset"
+                            className="text-white bg-red-600 hover:bg-red-700 active:scale-95 transition-[scale] duration-200 font-medium rounded-full text-sm px-5 py-2.5 text-center flex-1 cursor-pointer"
+                        >
+                            Clear
+                        </button>
+                        <button
+                            type="submit"
+                            className="text-white bg-blue-700 hover:bg-blue-800 active:scale-95 transition-[scale] duration-200 font-medium rounded-full text-sm px-5 py-2.5 text-center flex-1 cursor-pointer"
+                        >
+                            Submit
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </dialog>
+    );
+};
+
+export default EditTask;
