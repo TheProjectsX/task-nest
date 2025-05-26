@@ -6,6 +6,7 @@ import Navbar from "../Navbar";
 import { usePathname, useRouter } from "next/navigation";
 import axios from "axios";
 import { Bounce, ToastContainer } from "react-toastify";
+import Footer from "../Footer";
 
 const ProviderWrapper = ({ children }: { children: React.ReactNode }) => {
     const {
@@ -58,11 +59,13 @@ const ProviderWrapper = ({ children }: { children: React.ReactNode }) => {
         if (isLoading) return;
 
         if (userInfo) {
-            if (pathname === "/") {
+            if (["/", "/login", "/signup"].includes(pathname)) {
                 router.push("/tasks");
             }
         } else {
-            router.push("/");
+            if (!["/", "/login", "/signup"].includes(pathname)) {
+                router.push("/");
+            }
         }
     }, [userInfo, isLoading]);
 
@@ -89,8 +92,11 @@ const ProviderWrapper = ({ children }: { children: React.ReactNode }) => {
                 theme="light"
                 transition={Bounce}
             />
-            <Navbar />
-            {children}
+            <div className="flex flex-col gap-6 h-screen">
+                <Navbar />
+                <main className="flex-1">{children}</main>
+                <Footer />
+            </div>
         </>
     );
 };

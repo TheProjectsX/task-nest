@@ -11,7 +11,7 @@ const Navbar = () => {
     const pathname = usePathname();
 
     return (
-        <header className="flex items-center justify-between w-full py-2 max-width mb-6 border-b border-gray-400">
+        <header className="flex items-center justify-between w-full py-2 max-width border-b border-gray-400">
             {/* Logo */}
             <div>
                 <h2 className="text-2xl font-medium">
@@ -62,7 +62,10 @@ const Navbar = () => {
                 >
                     <figure title={userInfo?.name} className="cursor-pointer">
                         <img
-                            src={userInfo?.profile_picture}
+                            src={
+                                userInfo?.profile_picture ??
+                                "https://i.ibb.co/Dfp53bmp/user-avatar.png"
+                            }
                             alt="User profile Picture"
                             className="w-10 h-10 rounded-full"
                         />

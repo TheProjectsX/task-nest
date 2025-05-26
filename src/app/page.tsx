@@ -10,7 +10,7 @@ const Home = () => {
     if (isLoading || userInfo) return;
 
     return (
-        <main className="w-full h-screen flex flex-col items-center justify-center flex-1 px-4">
+        <div className="w-full h-full flex flex-col items-center justify-center flex-1 px-4">
             {/* Hero */}
             <div
                 className="relative aspect-[2/1] w-full max-width bg-no-repeat bg-cover bg-center rounded-2xl flex items-center justify-center"
@@ -38,7 +38,7 @@ const Home = () => {
 
                 <div className="bg-black/40 inset-0 absolute rounded-2xl"></div>
             </div>
-        </main>
+        </div>
     );
 };
 

@@ -15,9 +15,7 @@ export default function RootLayout({
     return (
         <html lang="en">
             <body className={`min-h-screen px-4`}>
-                <AppWrapper>
-                    <main className="">{children}</main>
-                </AppWrapper>
+                <AppWrapper>{children}</AppWrapper>
             </body>
         </html>
     );

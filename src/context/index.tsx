@@ -2,7 +2,8 @@ import React, { createContext, useReducer, useState } from "react";
 
 export interface UserInfo {
     name: string;
-    profile_picture: string;
+    email: string;
+    profile_picture?: string;
 }
 
 export interface Task {
@@ -89,10 +90,7 @@ export interface UserContextProps {
 export const UserContext = createContext<UserContextProps | null>(null);
 
 const UserContextWrapper = ({ children }: { children: React.ReactNode }) => {
-    const [userInfo, setUserInfo] = useState<UserInfo | null>({
-        name: "Rahat Khan",
-        profile_picture: "https://i.ibb.co/jkQk36Kg/2.jpg",
-    });
+    const [userInfo, setUserInfo] = useState<UserInfo | null>(null);
 
     const [isLoading, setIsLoading] = useState<boolean>(true);
 
