@@ -24,9 +24,12 @@ const ProviderWrapper = ({ children }: { children: React.ReactNode }) => {
     useEffect(() => {
         const fetchData = async () => {
             const loggedIn = localStorage.getItem("loggedIn");
-            if (!loggedIn) {
+
+            if (!loggedIn || loggedIn === "false") {
                 setUserInfo(null);
                 return;
+            } else {
+                setUserInfo(JSON.parse(loggedIn));
             }
 
             const localTasks: Task[] =
@@ -92,9 +95,9 @@ const ProviderWrapper = ({ children }: { children: React.ReactNode }) => {
                 theme="light"
                 transition={Bounce}
             />
-            <div className="flex flex-col gap-6 h-screen">
+            <div className="flex flex-col gap-6 min-h-screen px-4">
                 <Navbar />
-                <main className="flex-1">{children}</main>
+                {children}
                 <Footer />
             </div>
         </>

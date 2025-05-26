@@ -11,7 +11,11 @@ const EditTask = ({
     task: Task | undefined | null;
     closeModal: () => void;
 }) => {
-    const { projects, dispatchTasks: dispatch } = useContext(UserContext)!;
+    const {
+        tasks,
+        projects,
+        dispatchTasks: dispatch,
+    } = useContext(UserContext)!;
 
     useEffect(() => {
         document.body.style.overflow = task !== null ? "hidden" : "auto";
@@ -25,7 +29,9 @@ const EditTask = ({
         const form = e.target as HTMLFormElement;
 
         const taskData: Omit<Task, "id"> & { id: number | undefined } = {
-            id: task?.id,
+            id:
+                task?.id ??
+                Math.max(...tasks.map((task) => Number(task.id))) + 1,
             title: (form.elements.namedItem("title") as HTMLInputElement).value,
             status: form.status.value,
             priority: form.priority.value,
@@ -40,12 +46,32 @@ const EditTask = ({
             dispatch({ type: "ADD", payload: taskData });
             toast.success("Task Created");
         }
+
+        const localData: Task[] =
+            JSON.parse(localStorage.getItem("tasks")!) ?? [];
+        let newData;
+
+        if (task) {
+            const contains = localData.find((item) => item.id === taskData.id);
+            if (contains) {
+                newData = localData.map((item) =>
+                    item.id === taskData.id ? taskData : item
+                );
+            } else {
+                newData = localData;
+            }
+        } else {
+            newData = [...localData, taskData];
+        }
+
+        localStorage.setItem("tasks", JSON.stringify(newData));
+
         closeModal();
     };
 
     return (
         <dialog
-            className="absolute inset-0 h-full w-full bg-black/50 z-10 flex items-center justify-center"
+            className="fixed inset-0 w-full bg-black/50 z-10 flex justify-center items-center h-screen"
             open={!!task}
             onClose={closeModal}
             onClick={(e) => {
@@ -54,7 +80,7 @@ const EditTask = ({
                 }
             }}
         >
-            <div className="relative bg-white px-4 py-4 rounded-2xl w-full max-w-lg">
+            <div className="relative bg-white px-4 py-4 rounded-2xl w-full max-w-lg h-fit">
                 <button
                     className="absolute top-0.5 right-0.5 text-gray-500 hover:text-gray-700 p-1.5 rounded-full hover:bg-gray-100 cursor-pointer"
                     onClick={closeModal}
@@ -135,7 +161,6 @@ const EditTask = ({
                             type="date"
                             className="bg-gray-50 outline-none border-2 border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full px-2.5 py-2"
                             defaultValue={task?.dueDate}
-                            required
                         />
                     </label>
 

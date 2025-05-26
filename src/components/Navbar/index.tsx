@@ -48,12 +48,20 @@ const Navbar = () => {
                 <Dropdown
                     content={
                         <div className="divide-y divide-gray-300 rounded-lg shadow-sm w-44 overflow-hidden bg-white">
-                            <h3 className="block px-4 py-2">
-                                {userInfo?.name}
-                            </h3>
+                            <div>
+                                <h3 className="block px-4 pt-2">
+                                    {userInfo?.name}
+                                </h3>
+                                <p className="block px-4 pb-2 text-sm text-gray-500">
+                                    {userInfo?.email}
+                                </p>
+                            </div>
                             <button
                                 className="block text-left w-full px-4 py-2 hover:bg-gray-100 cursor-pointer"
-                                onClick={() => setUserInfo(null)}
+                                onClick={() => {
+                                    setUserInfo(null);
+                                    localStorage.setItem("loggedIn", "false");
+                                }}
                             >
                                 Logout
                             </button>

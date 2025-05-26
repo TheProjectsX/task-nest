@@ -1,5 +1,5 @@
 import { ProjectProps } from "@/components/ProjectCard";
-import { Project, UserContext } from "@/context";
+import { Project, Task, UserContext } from "@/context";
 import React, { useContext, useEffect } from "react";
 import { MdClose } from "react-icons/md";
 import { toast } from "react-toastify";
@@ -11,39 +11,63 @@ const EditProject = ({
     project: ProjectProps | undefined | null;
     closeModal: () => void;
 }) => {
-    const { dispatchProjects } = useContext(UserContext)!;
+    const { projects, dispatchProjects } = useContext(UserContext)!;
 
     useEffect(() => {
         document.body.style.overflow = project !== null ? "hidden" : "auto";
     }, [project]);
 
-    if (project === null) return;
-
     // Handle Submit Task
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         const form = e.target as HTMLFormElement;
-        const newProject = {
-            id: project?.id,
+        const projectData = {
+            id:
+                project?.id ??
+                Math.max(...projects.map((project) => Number(project.id))) + 1,
             name: form.project.value,
         };
 
         if (project) {
             dispatchProjects({
                 type: "UPDATE",
-                payload: newProject as Project,
+                payload: projectData as Project,
             });
             toast.success("Project Updated!");
         } else {
-            dispatchProjects({ type: "ADD", payload: newProject });
+            dispatchProjects({ type: "ADD", payload: projectData });
             toast.success("Project Created");
         }
+
+        const localData: Task[] =
+            JSON.parse(localStorage.getItem("projects")!) ?? [];
+        let newData;
+
+        if (project) {
+            const contains = localData.find(
+                (item) => item.id === projectData.id
+            );
+            if (contains) {
+                newData = localData.map((item) =>
+                    item.id === projectData.id ? projectData : item
+                );
+            } else {
+                newData = localData;
+            }
+        } else {
+            newData = [...localData, projectData];
+        }
+
+        localStorage.setItem("tasks", JSON.stringify(newData));
+
         closeModal();
     };
 
+    if (project === null) return;
+
     return (
         <dialog
-            className="absolute inset-0 h-full w-full bg-black/50 z-10 flex items-center justify-center"
+            className="fixed inset-0 h-screen w-full bg-black/50 z-10 flex items-center justify-center"
             open={!!project}
             onClose={closeModal}
             onClick={(e) => {

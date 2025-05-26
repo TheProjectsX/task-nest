@@ -30,6 +30,7 @@ const Login = () => {
 
         if (!userFound) return toast.error("Invalid Credentials");
 
+        localStorage.setItem("loggedIn", JSON.stringify(userFound));
         toast.success("Login Successful!");
         setUserInfo({ ...userFound });
     };
@@ -43,7 +44,7 @@ const Login = () => {
     }, [setSavedCredentials]);
 
     return (
-        <div className="w-full h-full flex justify-center items-center py-10">
+        <main className="flex-1 w-full h-full flex justify-center items-center py-10">
             <div className="w-full max-w-md">
                 <h2 className="text-center underline underline-offset-4 mb-8 text-2xl font-semibold">
                     Login to Your Account
@@ -90,7 +91,7 @@ const Login = () => {
                     </button>
                 </form>
             </div>
-        </div>
+        </main>
     );
 };
 

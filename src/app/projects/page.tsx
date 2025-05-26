@@ -30,10 +30,23 @@ const Projects = () => {
 
         dispatchProjects({ type: "DELETE", payload: project });
         toast.success("Project Deleted");
+
+        const localData: Project[] =
+            JSON.parse(localStorage.getItem("projects")!) ?? [];
+        let newData;
+
+        const contains = localData.find((item) => item.id === project.id);
+        if (contains) {
+            newData = localData.filter((item) => item.id !== project.id);
+        } else {
+            newData = localData;
+        }
+
+        localStorage.setItem("projects", JSON.stringify(newData));
     };
 
     return (
-        <div className="max-width mb-8">
+        <main className="max-width mb-8 flex-1">
             <EditProject
                 project={currentProject}
                 closeModal={() => setCurrentProject(null)}
@@ -65,7 +78,7 @@ const Projects = () => {
                     </div>
                 </div>
             )}
-        </div>
+        </main>
     );
 };
 

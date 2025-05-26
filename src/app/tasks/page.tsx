@@ -46,6 +46,19 @@ const TaskView = () => {
 
         dispatch({ type: "DELETE", payload: task });
         toast.success("Task Deleted");
+
+        const localData: Task[] =
+            JSON.parse(localStorage.getItem("tasks")!) ?? [];
+        let newData;
+
+        const contains = localData.find((item) => item.id === task.id);
+        if (contains) {
+            newData = localData.filter((item) => item.id !== task.id);
+        } else {
+            newData = localData;
+        }
+
+        localStorage.setItem("tasks", JSON.stringify(newData));
     };
 
     // Update tasksToView after tasks updated
@@ -54,7 +67,7 @@ const TaskView = () => {
     }, [tasks]);
 
     return (
-        <div className="max-width mb-8">
+        <main className="max-width mb-8">
             <EditTask
                 task={currentTask}
                 closeModal={() => setCurrentTask(null)}
@@ -153,7 +166,7 @@ const TaskView = () => {
                     ))}
                 </section>
             )}
-        </div>
+        </main>
     );
 };
 
