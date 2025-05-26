@@ -3,21 +3,27 @@ import React, { useContext } from "react";
 import Dropdown from "../Dropdown";
 import { usePathname } from "next/navigation";
 import NavLink from "../Navlink";
+import Link from "next/link";
 
 const Navbar = () => {
     const { userInfo, isLoading, setUserInfo } = useContext(UserContext)!;
-    if (!userInfo && !isLoading) return;
-
     const pathname = usePathname();
+
+    if (!userInfo && !isLoading) return;
 
     return (
         <header className="flex items-center justify-between w-full py-2 max-width border-b border-gray-400">
             {/* Logo */}
             <div>
                 <h2 className="text-2xl font-medium">
-                    {pathname
-                        .replace("/", "")
-                        .replace(/^./, (c) => c.toUpperCase())}
+                    {pathname !== "/admin" &&
+                        pathname
+                            .replace("/", "")
+                            .replace(/^./, (c) => c.toUpperCase())}
+                    {pathname === "/admin" &&
+                        userInfo?.email ===
+                            process.env.NEXT_PUBLIC_ADMIN_USER &&
+                        "Admin"}
                 </h2>
             </div>
 
@@ -56,6 +62,15 @@ const Navbar = () => {
                                     {userInfo?.email}
                                 </p>
                             </div>
+                            {userInfo?.email ===
+                                process.env.NEXT_PUBLIC_ADMIN_USER && (
+                                <Link
+                                    href={"/admin"}
+                                    className="block text-left w-full px-4 py-2 hover:bg-gray-100 cursor-pointer"
+                                >
+                                    Dashboard
+                                </Link>
+                            )}
                             <button
                                 className="block text-left w-full px-4 py-2 hover:bg-gray-100 cursor-pointer"
                                 onClick={() => {

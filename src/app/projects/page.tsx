@@ -5,6 +5,7 @@ import { Project, UserContext } from "@/context";
 import React, { useContext, useEffect, useState } from "react";
 import EditProject from "./EditProject";
 import { toast } from "react-toastify";
+import ReactHead from "@theprojectsx/react-head";
 
 const Projects = () => {
     const { tasks, projects, dispatchProjects } = useContext(UserContext)!;
@@ -47,6 +48,18 @@ const Projects = () => {
 
     return (
         <main className="max-width mb-8 flex-1">
+            <ReactHead>
+                <title>Projects | Task Nest</title>
+                <meta
+                    name="description"
+                    content="Browse all your projects and track the number of tasks under each project."
+                />
+                <meta
+                    name="keywords"
+                    content="projects, project list, task projects, task manager projects"
+                />
+            </ReactHead>
+
             <EditProject
                 project={currentProject}
                 closeModal={() => setCurrentProject(null)}

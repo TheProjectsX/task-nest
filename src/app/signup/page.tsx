@@ -1,5 +1,6 @@
 "use client";
 
+import ReactHead from "@theprojectsx/react-head";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import React from "react";
@@ -31,6 +32,18 @@ const Signup = () => {
 
     return (
         <main className="flex-1 w-full h-full flex justify-center items-center py-10">
+            <ReactHead>
+                <title>Sign Up | Task Nest</title>
+                <meta
+                    name="description"
+                    content="Create a new account to start managing your tasks and projects efficiently."
+                />
+                <meta
+                    name="keywords"
+                    content="sign up, register, create account, task manager registration"
+                />
+            </ReactHead>
+
             <div className="w-full max-w-md">
                 <h2 className="text-center underline underline-offset-4 mb-8 text-2xl font-semibold">
                     Register New Account

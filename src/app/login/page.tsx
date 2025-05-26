@@ -1,6 +1,7 @@
 "use client";
 
 import { UserContext } from "@/context";
+import ReactHead from "@theprojectsx/react-head";
 import Link from "next/link";
 import React, { useContext, useEffect, useState } from "react";
 import { toast } from "react-toastify";
@@ -24,15 +25,28 @@ const Login = () => {
         const email = form.email.value;
         const password = form.password.value;
 
-        const userFound = savedCredentials.find(
-            (users) => users.email === email && users.password === password
-        );
+        let userFound = null;
+
+        if (
+            email === process.env.NEXT_PUBLIC_ADMIN_USER &&
+            password === process.env.NEXT_PUBLIC_ADMIN_PASSWORD
+        ) {
+            userFound = {
+                name: "Admin",
+                profile_picture: "https://i.ibb.co/jkQk36Kg/2.jpg",
+                email: process.env.NEXT_PUBLIC_ADMIN_USER,
+            };
+        } else {
+            userFound = savedCredentials.find(
+                (users) => users.email === email && users.password === password
+            );
+        }
 
         if (!userFound) return toast.error("Invalid Credentials");
 
         localStorage.setItem("loggedIn", JSON.stringify(userFound));
         toast.success("Login Successful!");
-        setUserInfo({ ...userFound });
+        setUserInfo({ ...(userFound as any) });
     };
 
     // Load Credentials
@@ -45,6 +59,18 @@ const Login = () => {
 
     return (
         <main className="flex-1 w-full h-full flex justify-center items-center py-10">
+            <ReactHead>
+                <title>Login | Task Nest</title>
+                <meta
+                    name="description"
+                    content="Login to access your tasks and manage your projects effectively."
+                />
+                <meta
+                    name="keywords"
+                    content="login, sign in, task manager login, project access"
+                />
+            </ReactHead>
+
             <div className="w-full max-w-md">
                 <h2 className="text-center underline underline-offset-4 mb-8 text-2xl font-semibold">
                     Login to Your Account

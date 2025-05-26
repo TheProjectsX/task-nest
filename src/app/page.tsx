@@ -2,6 +2,7 @@
 
 import { CTAButton } from "@/components/Button";
 import { UserContext } from "@/context";
+import ReactHead from "@theprojectsx/react-head";
 import React, { useContext } from "react";
 
 const Home = () => {
@@ -11,6 +12,14 @@ const Home = () => {
 
     return (
         <main className="w-full h-full flex flex-col items-center justify-center flex-1 px-4">
+            <ReactHead>
+                <title>Homepage | Task Nest</title>
+                <meta
+                    name="description"
+                    content="Login or Sign up to use Task Nest"
+                />
+            </ReactHead>
+
             {/* Hero */}
             <div
                 className="relative aspect-[2/1] w-full max-width bg-no-repeat bg-cover bg-center rounded-2xl flex items-center justify-center"

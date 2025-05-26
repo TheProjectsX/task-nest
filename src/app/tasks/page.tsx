@@ -3,6 +3,7 @@
 import EditTask from "./EditTask";
 import TaskCard, { PRIORITY, STATUS } from "@/components/TaskCard";
 import { Task, UserContext } from "@/context";
+import ReactHead from "@theprojectsx/react-head";
 import React, { useContext, useEffect, useRef, useState } from "react";
 import { toast } from "react-toastify";
 
@@ -68,6 +69,18 @@ const TaskView = () => {
 
     return (
         <main className="max-width mb-8">
+            <ReactHead>
+                <title>Tasks | Task Nest</title>
+                <meta
+                    name="description"
+                    content="View and manage all your tasks. Filter by project, priority, and status."
+                />
+                <meta
+                    name="keywords"
+                    content="tasks, task list, manage tasks, filter tasks, project tasks"
+                />
+            </ReactHead>
+
             <EditTask
                 task={currentTask}
                 closeModal={() => setCurrentTask(null)}

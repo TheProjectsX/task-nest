@@ -58,7 +58,7 @@ const EditProject = ({
             newData = [...localData, projectData];
         }
 
-        localStorage.setItem("tasks", JSON.stringify(newData));
+        localStorage.setItem("projects", JSON.stringify(newData));
 
         closeModal();
     };

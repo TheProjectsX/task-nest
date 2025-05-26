@@ -27,7 +27,6 @@ const ProviderWrapper = ({ children }: { children: React.ReactNode }) => {
 
             if (!loggedIn || loggedIn === "false") {
                 setUserInfo(null);
-                return;
             } else {
                 setUserInfo(JSON.parse(loggedIn));
             }
@@ -63,6 +62,11 @@ const ProviderWrapper = ({ children }: { children: React.ReactNode }) => {
 
         if (userInfo) {
             if (["/", "/login", "/signup"].includes(pathname)) {
+                router.push("/tasks");
+            } else if (
+                pathname === "/admin" &&
+                userInfo?.email !== process.env.NEXT_PUBLIC_ADMIN_USER
+            ) {
                 router.push("/tasks");
             }
         } else {

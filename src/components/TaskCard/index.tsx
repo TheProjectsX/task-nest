@@ -42,7 +42,7 @@ const TaskCard = ({ task, onEdit, onDelete }: TaskCardProps) => {
                     >
                         {PRIORITY[task.priority]}
                     </span>
-                    <span className="text-gray-400" title="Due Date">
+                    <span className="text-gray-600" title="Due Date">
                         {task.dueDate
                             ? new Date(task.dueDate).toLocaleDateString(
                                   "en-US",
