@@ -1,6 +1,6 @@
 [
     {
-        "id": "1",
+        "id": 1,
         "title": "Design landing page",
         "status": "IN_PROGRESS",
         "priority": "HIGH",
@@ -8,7 +8,7 @@
         "project": "Website Redesign"
     },
     {
-        "id": "2",
+        "id": 2,
         "title": "Write blog post on productivity",
         "status": "TODO",
         "priority": "MEDIUM",
@@ -16,7 +16,7 @@
         "project": "Content Creation"
     },
     {
-        "id": "3",
+        "id": 3,
         "title": "Fix login issue",
         "status": "DONE",
         "priority": "HIGH",
@@ -24,7 +24,7 @@
         "project": "Bug Fixes"
     },
     {
-        "id": "4",
+        "id": 4,
         "title": "Setup CI/CD pipeline",
         "status": "IN_PROGRESS",
         "priority": "HIGH",
@@ -32,7 +32,7 @@
         "project": "DevOps"
     },
     {
-        "id": "5",
+        "id": 5,
         "title": "Update user profile page",
         "status": "TODO",
         "priority": "LOW",
@@ -40,7 +40,7 @@
         "project": "User Experience"
     },
     {
-        "id": "6",
+        "id": 6,
         "title": "Test task filtering feature",
         "status": "IN_PROGRESS",
         "priority": "MEDIUM",
@@ -48,7 +48,7 @@
         "project": "Testing"
     },
     {
-        "id": "7",
+        "id": 7,
         "title": "Clean up unused CSS",
         "status": "DONE",
         "priority": "LOW",
@@ -56,7 +56,7 @@
         "project": "Refactor"
     },
     {
-        "id": "8",
+        "id": 8,
         "title": "Prepare pitch deck",
         "status": "TODO",
         "priority": "HIGH",

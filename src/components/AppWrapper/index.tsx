@@ -5,6 +5,7 @@ import React, { useContext, useEffect } from "react";
 import Navbar from "../Navbar";
 import { useRouter } from "next/navigation";
 import axios from "axios";
+import { Bounce, ToastContainer } from "react-toastify";
 
 const ProviderWrapper = ({ children }: { children: React.ReactNode }) => {
     const {
@@ -12,7 +13,7 @@ const ProviderWrapper = ({ children }: { children: React.ReactNode }) => {
         setUserInfo,
         isLoading,
         setIsLoading,
-        setTasks,
+        dispatch,
         setProjects,
     } = useContext(UserContext)!;
 
@@ -37,7 +38,11 @@ const ProviderWrapper = ({ children }: { children: React.ReactNode }) => {
                 axios.get<string[]>("/api/projects"),
             ]);
 
-            setTasks([...tasksResponse.data, ...localTasks]);
+            dispatch({
+                type: "SET",
+                payload: [...tasksResponse.data, ...localTasks],
+            });
+
             setProjects([...projectsResponse.data, ...localProjects]);
             setIsLoading(false);
         };
@@ -64,6 +69,19 @@ const ProviderWrapper = ({ children }: { children: React.ReactNode }) => {
 
     return (
         <>
+            <ToastContainer
+                position="top-center"
+                autoClose={3000}
+                hideProgressBar={false}
+                newestOnTop={false}
+                closeOnClick={false}
+                rtl={false}
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover
+                theme="light"
+                transition={Bounce}
+            />
             <Navbar />
             {children}
         </>

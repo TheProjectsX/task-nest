@@ -1,7 +1,8 @@
 import { Task, UserContext } from "@/context";
-import React, { useContext, useEffect } from "react";
+import React, { FormEvent, useContext, useEffect } from "react";
 import { PRIORITY, STATUS } from "../TaskCard";
 import { MdClose } from "react-icons/md";
+import { toast } from "react-toastify";
 
 const EditTask = ({
     task,
@@ -10,13 +11,37 @@ const EditTask = ({
     task: Task | undefined | null;
     closeModal: () => void;
 }) => {
-    const { projects } = useContext(UserContext)!;
+    const { projects, dispatch } = useContext(UserContext)!;
 
     useEffect(() => {
         document.body.style.overflow = task !== null ? "hidden" : "auto";
     }, [task]);
 
     if (task === null) return;
+
+    // Handle Submit Task
+    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        const form = e.target as HTMLFormElement;
+
+        const taskData: Omit<Task, "id"> & { id: number | undefined } = {
+            id: task?.id,
+            title: (form.elements.namedItem("title") as HTMLInputElement).value,
+            status: form.status.value,
+            priority: form.priority.value,
+            project: form.project.value,
+            dueDate: form.dueDate.value,
+        };
+
+        if (task) {
+            dispatch({ type: "UPDATE", payload: taskData as Task });
+            toast.success("Task Updated!");
+        } else {
+            dispatch({ type: "ADD", payload: taskData });
+            toast.success("Task Created");
+        }
+        closeModal();
+    };
 
     return (
         <dialog
@@ -43,7 +68,7 @@ const EditTask = ({
                         : "Update Task"}
                 </h3>
 
-                <form className="flex flex-col gap-4">
+                <form className="flex flex-col gap-4" onSubmit={handleSubmit}>
                     <label className="mb-2 text-gray-900 flex flex-col gap-2">
                         <span className="text-sm font-medium">Task</span>
                         <input
@@ -91,7 +116,7 @@ const EditTask = ({
                         <select
                             name="project"
                             className="bg-gray-50 outline-none border-2 border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full px-2.5 py-2"
-                            defaultValue={task?.priority}
+                            defaultValue={task?.project}
                         >
                             <option value="">Unlisted</option>
                             {projects.map((item, idx) => (

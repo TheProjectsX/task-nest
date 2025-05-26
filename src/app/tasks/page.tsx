@@ -3,10 +3,11 @@
 import EditTask from "@/components/EditTask";
 import TaskCard, { PRIORITY, STATUS } from "@/components/TaskCard";
 import { Task, UserContext } from "@/context";
-import React, { useContext, useRef, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
+import { toast } from "react-toastify";
 
 const TaskView = () => {
-    const { tasks, projects } = useContext(UserContext)!;
+    const { tasks, dispatch, projects } = useContext(UserContext)!;
 
     const [tasksToView, setTasksToView] = useState<Task[]>(tasks);
 
@@ -33,6 +34,20 @@ const TaskView = () => {
 
         setTasksToView(filtered);
     };
+
+    // Handle Delete Task
+    const handleDeleteTask = async (task: Task) => {
+        const confirmed = window.confirm("Delete Task?");
+        if (!confirmed) return;
+
+        dispatch({ type: "DELETE", payload: task });
+        toast.success("Task Deleted");
+    };
+
+    // Update tasksToView after tasks updated
+    useEffect(() => {
+        handleFilter();
+    }, [tasks]);
 
     return (
         <div className="max-width mb-8">
@@ -124,7 +139,7 @@ const TaskView = () => {
                             task={task}
                             key={idx}
                             onEdit={() => setCurrentTask(task)}
-                            onDelete={() => {}}
+                            onDelete={() => handleDeleteTask(task)}
                         />
                     ))}
                 </section>

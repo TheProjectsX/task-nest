@@ -1,3 +1,4 @@
+import { Task } from "@/context";
 import React from "react";
 import { FiEdit3 } from "react-icons/fi";
 import { RiDeleteBin4Line } from "react-icons/ri";
@@ -15,15 +16,6 @@ export enum PRIORITY {
     LOW = "Low",
     MEDIUM = "Medium",
     HIGH = "High",
-}
-
-interface Task {
-    id: string;
-    title: string;
-    status: TaskStatus;
-    priority: Priority;
-    dueDate: string;
-    project: string;
 }
 
 interface TaskCardProps {
