@@ -1,10 +1,7 @@
-import { Task } from "@/context";
+import { Project, Task } from "@/context";
 import React from "react";
 import { FiEdit3 } from "react-icons/fi";
 import { RiDeleteBin4Line } from "react-icons/ri";
-
-type TaskStatus = "TODO" | "IN_PROGRESS" | "DONE";
-type Priority = "LOW" | "MEDIUM" | "HIGH";
 
 export enum STATUS {
     TODO = "Todo",
@@ -19,7 +16,7 @@ export enum PRIORITY {
 }
 
 interface TaskCardProps {
-    task: Task;
+    task: Task & { project: Project | undefined };
     onEdit: () => void;
     onDelete: () => void;
 }
@@ -30,8 +27,7 @@ const TaskCard = ({ task, onEdit, onDelete }: TaskCardProps) => {
             <div className="px-4 flex-1">
                 <h3 className="text-lg font-semibold">{task.title}</h3>
                 <p className="text-sm text-gray-500 mt-1">
-                    Project:{" "}
-                    {(task.project ?? "").length > 0 ? task.project : "N/A"}
+                    Project: {task.project?.name ?? "N/A"}
                 </p>
                 <div className="flex justify-between mt-4 text-sm">
                     <span

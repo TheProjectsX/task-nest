@@ -1,9 +1,9 @@
 "use client";
 
-import UserContextWrapper, { Task, UserContext } from "@/context";
+import UserContextWrapper, { Project, Task, UserContext } from "@/context";
 import React, { useContext, useEffect } from "react";
 import Navbar from "../Navbar";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import axios from "axios";
 import { Bounce, ToastContainer } from "react-toastify";
 
@@ -13,11 +13,12 @@ const ProviderWrapper = ({ children }: { children: React.ReactNode }) => {
         setUserInfo,
         isLoading,
         setIsLoading,
-        dispatch,
-        setProjects,
+        dispatchTasks,
+        dispatchProjects,
     } = useContext(UserContext)!;
 
     const router = useRouter();
+    const pathname = usePathname();
 
     useEffect(() => {
         const fetchData = async () => {
@@ -30,20 +31,24 @@ const ProviderWrapper = ({ children }: { children: React.ReactNode }) => {
             const localTasks: Task[] =
                 JSON.parse(localStorage.getItem("tasks")!) ?? [];
 
-            const localProjects: string[] =
+            const localProjects: Project[] =
                 JSON.parse(localStorage.getItem("projects")!) ?? [];
 
             const [tasksResponse, projectsResponse] = await Promise.all([
                 axios.get<Task[]>("/api/tasks"),
-                axios.get<string[]>("/api/projects"),
+                axios.get<Project[]>("/api/projects"),
             ]);
 
-            dispatch({
+            dispatchTasks({
                 type: "SET",
                 payload: [...tasksResponse.data, ...localTasks],
             });
 
-            setProjects([...projectsResponse.data, ...localProjects]);
+            dispatchProjects({
+                type: "SET",
+                payload: [...projectsResponse.data, ...localProjects],
+            });
+
             setIsLoading(false);
         };
         fetchData();
@@ -53,7 +58,9 @@ const ProviderWrapper = ({ children }: { children: React.ReactNode }) => {
         if (isLoading) return;
 
         if (userInfo) {
-            router.push("/tasks");
+            if (pathname === "/") {
+                router.push("/tasks");
+            }
         } else {
             router.push("/");
         }

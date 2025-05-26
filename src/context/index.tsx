@@ -11,16 +11,21 @@ export interface Task {
     status: "TODO" | "IN_PROGRESS" | "DONE";
     priority: "LOW" | "MEDIUM" | "HIGH";
     dueDate: string;
-    project: string;
+    projectId: number | null;
 }
 
-type Action =
+export interface Project {
+    id: number;
+    name: string;
+}
+
+type TaskAction =
     | { type: "SET"; payload: Task[] }
     | { type: "ADD"; payload: Omit<Task, "id"> & { id: number | undefined } }
     | { type: "UPDATE"; payload: Task }
     | { type: "DELETE"; payload: Task };
 
-const taskReducer = (state: Task[], action: Action): Task[] => {
+const taskReducer = (state: Task[], action: TaskAction): Task[] => {
     switch (action.type) {
         case "SET":
             return [...action.payload];
@@ -32,12 +37,39 @@ const taskReducer = (state: Task[], action: Action): Task[] => {
 
             return [...state, newTask];
         case "UPDATE":
-            console.log(action.payload);
             return state.map((task) =>
                 task.id === action.payload.id ? action.payload : task
             );
         case "DELETE":
             return state.filter((task) => task.id !== action.payload.id);
+        default:
+            return state;
+    }
+};
+
+type ProjectAction =
+    | { type: "SET"; payload: Project[] }
+    | { type: "ADD"; payload: Omit<Project, "id"> & { id: number | undefined } }
+    | { type: "UPDATE"; payload: Project }
+    | { type: "DELETE"; payload: Project };
+
+const projectReducer = (state: Project[], action: ProjectAction): Project[] => {
+    switch (action.type) {
+        case "SET":
+            return [...action.payload];
+        case "ADD":
+            const newProject: Project = {
+                ...action.payload,
+                id: Math.max(...state.map((project) => Number(project.id))) + 1,
+            };
+
+            return [...state, newProject];
+        case "UPDATE":
+            return state.map((project) =>
+                project.id === action.payload.id ? action.payload : project
+            );
+        case "DELETE":
+            return state.filter((project) => project.id !== action.payload.id);
         default:
             return state;
     }
@@ -49,9 +81,9 @@ export interface UserContextProps {
     isLoading: boolean;
     setIsLoading: React.Dispatch<React.SetStateAction<boolean>>;
     tasks: Task[];
-    dispatch: React.Dispatch<Action>;
-    projects: string[];
-    setProjects: React.Dispatch<React.SetStateAction<string[]>>;
+    dispatchTasks: React.Dispatch<TaskAction>;
+    projects: Project[];
+    dispatchProjects: React.Dispatch<ProjectAction>;
 }
 
 export const UserContext = createContext<UserContextProps | null>(null);
@@ -64,9 +96,9 @@ const UserContextWrapper = ({ children }: { children: React.ReactNode }) => {
 
     const [isLoading, setIsLoading] = useState<boolean>(true);
 
-    const [tasks, dispatch] = useReducer(taskReducer, []);
+    const [tasks, dispatchTasks] = useReducer(taskReducer, []);
 
-    const [projects, setProjects] = useState<string[]>([]);
+    const [projects, dispatchProjects] = useReducer(projectReducer, []);
 
     return (
         <UserContext.Provider
@@ -76,9 +108,9 @@ const UserContextWrapper = ({ children }: { children: React.ReactNode }) => {
                 isLoading,
                 setIsLoading,
                 tasks,
-                dispatch,
+                dispatchTasks,
                 projects,
-                setProjects,
+                dispatchProjects,
             }}
         >
             {children}

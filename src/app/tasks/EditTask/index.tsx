@@ -1,6 +1,6 @@
 import { Task, UserContext } from "@/context";
-import React, { FormEvent, useContext, useEffect } from "react";
-import { PRIORITY, STATUS } from "../TaskCard";
+import React, { useContext, useEffect } from "react";
+import { PRIORITY, STATUS } from "@/components/TaskCard";
 import { MdClose } from "react-icons/md";
 import { toast } from "react-toastify";
 
@@ -11,7 +11,7 @@ const EditTask = ({
     task: Task | undefined | null;
     closeModal: () => void;
 }) => {
-    const { projects, dispatch } = useContext(UserContext)!;
+    const { projects, dispatchTasks: dispatch } = useContext(UserContext)!;
 
     useEffect(() => {
         document.body.style.overflow = task !== null ? "hidden" : "auto";
@@ -29,7 +29,7 @@ const EditTask = ({
             title: (form.elements.namedItem("title") as HTMLInputElement).value,
             status: form.status.value,
             priority: form.priority.value,
-            project: form.project.value,
+            projectId: Number(form.project.value),
             dueDate: form.dueDate.value,
         };
 
@@ -116,12 +116,12 @@ const EditTask = ({
                         <select
                             name="project"
                             className="bg-gray-50 outline-none border-2 border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full px-2.5 py-2"
-                            defaultValue={task?.project}
+                            defaultValue={task?.projectId ?? ""}
                         >
                             <option value="">Unlisted</option>
-                            {projects.map((item, idx) => (
-                                <option key={idx} value={item}>
-                                    {item}
+                            {projects.map((project) => (
+                                <option key={project.id} value={project.id}>
+                                    {project.name}
                                 </option>
                             ))}
                         </select>

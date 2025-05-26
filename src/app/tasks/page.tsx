@@ -1,13 +1,17 @@
 "use client";
 
-import EditTask from "@/components/EditTask";
+import EditTask from "./EditTask";
 import TaskCard, { PRIORITY, STATUS } from "@/components/TaskCard";
 import { Task, UserContext } from "@/context";
 import React, { useContext, useEffect, useRef, useState } from "react";
 import { toast } from "react-toastify";
 
 const TaskView = () => {
-    const { tasks, dispatch, projects } = useContext(UserContext)!;
+    const {
+        tasks,
+        dispatchTasks: dispatch,
+        projects,
+    } = useContext(UserContext)!;
 
     const [tasksToView, setTasksToView] = useState<Task[]>(tasks);
 
@@ -29,7 +33,7 @@ const TaskView = () => {
             (item) =>
                 [item.status, undefined, ""].includes(status) &&
                 [item.priority, undefined, ""].includes(priority) &&
-                [item.project, undefined, ""].includes(project)
+                [item.projectId?.toString(), undefined, ""].includes(project)
         );
 
         setTasksToView(filtered);
@@ -106,9 +110,9 @@ const TaskView = () => {
                             defaultValue={""}
                         >
                             <option value={""}>Unfiltered</option>
-                            {projects.map((item) => (
-                                <option key={item} value={item}>
-                                    {item}
+                            {projects.map((project) => (
+                                <option key={project.id} value={project.id}>
+                                    {project.name}
                                 </option>
                             ))}
                         </select>
@@ -136,7 +140,12 @@ const TaskView = () => {
                 <section className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                     {tasksToView.map((task, idx) => (
                         <TaskCard
-                            task={task}
+                            task={{
+                                ...task,
+                                project: projects.find(
+                                    (item) => item.id === task.projectId
+                                ),
+                            }}
                             key={idx}
                             onEdit={() => setCurrentTask(task)}
                             onDelete={() => handleDeleteTask(task)}
