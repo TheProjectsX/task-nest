@@ -1,5 +1,4 @@
 import Link from "next/link";
-import { MdArrowOutward } from "react-icons/md";
 
 interface CTAButtonProps {
     href: string;
@@ -11,20 +10,13 @@ export const CTAButton = ({ href, children, className }: CTAButtonProps) => {
     return (
         <Link
             href={href}
-            className={`relative flex items-center justify-start py-3 pl-4 pr-12 overflow-hidden font-semibold text-blue-600 transition-all duration-150 ease-in-out rounded hover:pl-10 hover:pr-6 bg-gray-50 group ${
+            className={`relative z-30 inline-flex items-center justify-center w-auto px-8 py-3 overflow-hidden font-bold text-gray-500 transition-all duration-500 border border-gray-200 rounded-md cursor-pointer group ease bg-gradient-to-b from-white to-gray-50 hover:from-gray-50 hover:to-white active:to-white whitespace-nowrap ${
                 className ?? ""
             }`}
         >
-            <span className="absolute bottom-0 left-0 w-full h-1 transition-all duration-150 ease-in-out bg-blue-500 group-hover:h-full"></span>
-            <span className="absolute right-0 pr-4 duration-200 ease-out group-hover:translate-x-12">
-                <MdArrowOutward />
-            </span>
-            <span className="absolute left-0 pl-2.5 -translate-x-12 group-hover:translate-x-0 ease-out duration-200 text-white">
-                <MdArrowOutward />
-            </span>
-            <span className="relative w-full text-left transition-colors duration-200 ease-in-out group-hover:text-white">
-                {children}
-            </span>
+            <span className="w-full h-0.5 absolute bottom-0 group-active:bg-transparent left-0 bg-gray-100"></span>
+            <span className="h-full w-0.5 absolute bottom-0 group-active:bg-transparent right-0 bg-gray-100"></span>
+            {children}
         </Link>
     );
 };
