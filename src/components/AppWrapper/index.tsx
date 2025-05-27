@@ -79,7 +79,11 @@ const ProviderWrapper = ({ children }: { children: React.ReactNode }) => {
     if (isLoading) {
         return (
             <div className="absolute inset-0 flex justify-center items-center">
-                <p className="animate-bounce text-2xl">Loading...</p>
+                <img
+                    src={"/logo.png"}
+                    alt="Task Nest Data loading"
+                    className="animate-bounce size-20 shadow-2xl rounded-full"
+                />
             </div>
         );
     }
