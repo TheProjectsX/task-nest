@@ -92,7 +92,9 @@ const EditProject = ({
 
                 <form className="flex flex-col gap-4" onSubmit={handleSubmit}>
                     <label className="mb-2 text-gray-900 flex flex-col gap-2">
-                        <span className="text-sm font-medium">Project</span>
+                        <span className="text-sm font-medium">
+                            Project Name
+                        </span>
                         <input
                             type="text"
                             name="project"

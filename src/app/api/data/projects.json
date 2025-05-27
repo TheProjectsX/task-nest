@@ -1,10 +1,7 @@
 [
     { "id": 1, "name": "Website Redesign" },
-    { "id": 2, "name": "Content Creation" },
-    { "id": 3, "name": "Bug Fixes" },
-    { "id": 4, "name": "DevOps" },
-    { "id": 5, "name": "User Experience" },
-    { "id": 6, "name": "Testing" },
-    { "id": 7, "name": "Refactor" },
-    { "id": 8, "name": "Business" }
+    { "id": 2, "name": "Authentication Module" },
+    { "id": 3, "name": "Production Deployment" },
+    { "id": 4, "name": "Backend Setup" },
+    { "id": 5, "name": "E-commerce Integration" }
 ]

@@ -9,58 +9,66 @@
     },
     {
         "id": 2,
-        "title": "Write blog post on productivity",
+        "title": "Fix login bug",
         "status": "TODO",
         "priority": "MEDIUM",
-        "dueDate": "2025-06-02",
+        "dueDate": "2025-06-01",
         "projectId": 2
     },
     {
         "id": 3,
-        "title": "Fix login issue",
+        "title": "Update README file",
         "status": "DONE",
-        "priority": "HIGH",
-        "dueDate": "2025-05-20",
-        "projectId": 3
+        "priority": "LOW",
+        "dueDate": "2025-05-25",
+        "projectId": null
     },
     {
         "id": 4,
-        "title": "Setup CI/CD pipeline",
+        "title": "Create user profile component",
         "status": "IN_PROGRESS",
         "priority": "HIGH",
         "dueDate": "2025-06-05",
-        "projectId": 4
+        "projectId": 1
     },
     {
         "id": 5,
-        "title": "Update user profile page",
+        "title": "Deploy to production",
         "status": "TODO",
-        "priority": "LOW",
+        "priority": "HIGH",
         "dueDate": "2025-06-10",
-        "projectId": 5
+        "projectId": 3
     },
     {
         "id": 6,
-        "title": "Test task filtering feature",
+        "title": "Setup database schema",
         "status": "IN_PROGRESS",
-        "priority": "MEDIUM",
-        "dueDate": "2025-06-01",
-        "projectId": 6
+        "priority": "HIGH",
+        "dueDate": "2025-06-02",
+        "projectId": 4
     },
     {
         "id": 7,
-        "title": "Clean up unused CSS",
-        "status": "DONE",
-        "priority": "LOW",
-        "dueDate": "2025-05-22",
-        "projectId": 7
+        "title": "Write unit tests",
+        "status": "TODO",
+        "priority": "MEDIUM",
+        "dueDate": "2025-06-07",
+        "projectId": 5
     },
     {
         "id": 8,
-        "title": "Prepare pitch deck",
+        "title": "Integrate payment gateway",
         "status": "TODO",
         "priority": "HIGH",
+        "dueDate": "2025-06-12",
+        "projectId": 5
+    },
+    {
+        "id": 9,
+        "title": "Optimize images for SEO",
+        "status": "TODO",
+        "priority": "LOW",
         "dueDate": "2025-06-03",
-        "projectId": 8
+        "projectId": 1
     }
 ]
