@@ -1,36 +1,59 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Task Nest
 
-## Getting Started
+**Task Nest** is a simple and intuitive task management web app that lets users manage tasks, organize projects, and stay productive. Users can register, log in, add, edit, and delete tasks, filter them by status, priority, and project—everything stored locally in the browser for a smooth, database-free experience.
 
-First, run the development server:
+---
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+## 🌐 Live Demo
+
+🔗 [Task Nest Live](https://tasknest-sable.vercel.app/)
+
+## 🔐 Admin Credentials
+
+Though there is nothing spacial in the Admin Dashboard, Still!
+
+```
+Email: admin@tasknest.com
+Password: Tasknest#123
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+---
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 🚀 Technologies Used
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+-   **Next.js**
+-   **React**
+-   **TypeScript**
+-   **Tailwind CSS**
+-   **Context API + useReducer**
+-   **LocalStorage for persistence**
 
-## Learn More
+---
 
-To learn more about Next.js, take a look at the following resources:
+## 🛠️ Setup Instructions
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+1. **Clone the repository**
+    ```bash
+    git clone https://github.com/theprojectsx/task-nest.git
+    cd task-nest
+    ```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+---
 
-## Deploy on Vercel
+2. **Install dependencies**
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+    ```bash
+    npm install
+    ```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+3. **Setup `.env.local` File**
+
+    Follow `.env.example`
+
+4. **Run the development server**
+
+    ```bash
+    npm run dev
+    ```
+
+5. Open [http://localhost:3000](http://localhost:3000) to see it in action.
